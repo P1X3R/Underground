@@ -1,0 +1,3 @@
+[submodule "external/raylib-aseprite"]
+	path = external/raylib-aseprite
+	url = https://github.com/RobLoach/raylib-aseprite.git
