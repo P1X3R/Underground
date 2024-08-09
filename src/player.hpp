@@ -5,7 +5,7 @@ enum playerAnimation { idle, walking };
 enum playerDirection { left, right };
 
 class Player {
-public:
+ public:
   float x, y, width, height;
   Texture2D sprite;
 
@@ -14,7 +14,10 @@ public:
   void movement(int speed);
   void draw();
 
-protected:
+ protected:
   playerDirection direction;
-  int frameCounter, currentFrame;
+  playerAnimation animation;
+  int currentFrame = 1;
+  float frameRate = .1f;
+  float frameTimer = .0f;
 };
