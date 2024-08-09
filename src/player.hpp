@@ -1,12 +1,20 @@
 #pragma once
 #include "raylib.h"
 
+enum playerAnimation { idle, walking };
+enum playerDirection { left, right };
+
 class Player {
 public:
-  int x, y, width, height;
+  float x, y, width, height;
   Texture2D sprite;
 
   Player();
 
-  void movement(short speed);
+  void movement(int speed);
+  void draw();
+
+protected:
+  playerDirection direction;
+  int frameCounter, currentFrame;
 };

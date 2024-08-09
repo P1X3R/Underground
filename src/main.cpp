@@ -17,12 +17,13 @@ int main() {
     BeginDrawing();
 
     ClearBackground(RAYWHITE);
-    DrawRectangleLines(player.x, player.y, player.width, player.height, BLACK);
+    player.draw();
 
     EndDrawing();
   }
 
   // Uninitialize
+  UnloadTexture(player.sprite);
   CloseWindow();
 
   return 0;
