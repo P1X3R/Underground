@@ -27,7 +27,9 @@ void Player::movement(int speed) {
     animation = walking;
     direction = right;
   }
-  if (not IsKeyDown(KEY_A) and not IsKeyDown(KEY_D)) animation = idle;
+  if ((not IsKeyDown(KEY_A) and not IsKeyDown(KEY_D)) or
+      ((IsKeyDown(KEY_A) and IsKeyDown(KEY_D))))
+    animation = idle;
 }
 
 void Player::draw() {
