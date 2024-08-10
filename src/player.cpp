@@ -17,19 +17,20 @@ Player::Player() {
 }
 
 void Player::movement(int speed) {
-  if (IsKeyDown(KEY_A)) {
+  bool keyRight = IsKeyDown(KEY_D);
+  bool keyLeft = IsKeyDown(KEY_A);
+
+  if (keyLeft and canMove.left) {
     x -= speed;
     animation = walking;
     direction = left;
   }
-  if (IsKeyDown(KEY_D)) {
+  if (keyRight and canMove.right) {
     x += speed;
     animation = walking;
     direction = right;
   }
-  if ((not IsKeyDown(KEY_A) and not IsKeyDown(KEY_D)) or
-      ((IsKeyDown(KEY_A) and IsKeyDown(KEY_D))))
-    animation = idle;
+  if (not keyLeft and not keyRight or keyLeft and keyRight) animation = idle;
 }
 
 void Player::draw() {

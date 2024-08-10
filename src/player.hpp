@@ -4,9 +4,15 @@
 enum playerAnimation { idle, walking };
 enum playerDirection { left, right };
 
+struct canMoveDirection {
+  bool left;
+  bool right;
+};
+
 class Player {
  public:
   float x, y, width, height;
+  canMoveDirection canMove = {true, true};
   Texture2D sprite;
 
   Player();

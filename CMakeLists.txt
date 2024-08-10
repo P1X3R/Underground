@@ -5,7 +5,6 @@ project(underground CXX)
 set(CMAKE_CXX_STANDARD 11) # I want learn modern C++
 set(CMAKE_CXX_STANDARD_REQUIRED True)
 set(CMAKE_EXPORT_COMPILE_COMMANDS True)
-set(RAYLIB_VERSION 5.0)
 set(SOURCE_FILES
 	./src/main.cpp
 	./src/player.cpp
@@ -13,7 +12,7 @@ set(SOURCE_FILES
 
 # Libraries
 ## Raylib
-find_library(raylib ${RAYLIB_VERSION})
+find_library(raylib 5.0)
 if (NOT raylib)
 	include(FetchContent)
 	FetchContent_Declare(
@@ -22,7 +21,7 @@ if (NOT raylib)
 		GIT_TAG master
 	)
 	FetchContent_MakeAvailable(raylib)
-endif()
+endif(NOT raylib)
 
 add_executable(${PROJECT_NAME} ${SOURCE_FILES})
 target_link_libraries(${PROJECT_NAME} raylib)
