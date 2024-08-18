@@ -36,7 +36,7 @@ void Player::movement(int speed) {
   if (keySpace and not canMove.down) {
     canMove.down = true;
     velocity.y -= 6.f;
-    /*animation = jumping;*/
+    animation = jumping;
   }
   if (not keyLeft and not keyRight or keyLeft and keyRight) animation = idle;
 
@@ -61,14 +61,16 @@ void Player::draw() {
     for (int i = 0; i < 3; i++) frames[i].width *= -1;
 
   // Change of frame
-  if (animation == walking) {
+  if (animation == walking and not canMove.down) {
     frameTimer += GetFrameTime();
     if (frameTimer >= frameRate) {
       frameTimer = .0;
       currentFrame++;
       if (currentFrame >= 3) currentFrame = 1;
     }
-  } else if (animation == idle)
+  } else if (animation == jumping)
+    currentFrame = 2;
+  else if (animation == idle)
     currentFrame = 0;
 
   DrawTexturePro(sprite, frames[currentFrame], {x, y, spriteFrame, height},
