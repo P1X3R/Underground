@@ -2,6 +2,8 @@
 
 #include "raylib.h"
 
+#define GRAVITY .2f
+
 Player::Player() {
   float size = 4;
 
@@ -19,6 +21,7 @@ Player::Player() {
 void Player::movement(int speed) {
   bool keyRight = IsKeyDown(KEY_D);
   bool keyLeft = IsKeyDown(KEY_A);
+  bool keySpace = IsKeyPressed(KEY_SPACE);
 
   if (keyLeft and canMove.left) {
     x -= speed;
@@ -30,7 +33,20 @@ void Player::movement(int speed) {
     animation = walking;
     direction = right;
   }
+  if (keySpace and not canMove.down) {
+    canMove.down = true;
+    velocity.y -= 6.f;
+    /*animation = jumping;*/
+  }
   if (not keyLeft and not keyRight or keyLeft and keyRight) animation = idle;
+
+  // Make he fall
+  if (canMove.down)
+    velocity.y += GRAVITY;
+  else
+    velocity.y = 0.f;
+
+  y += velocity.y;
 }
 
 void Player::draw() {
@@ -40,22 +56,21 @@ void Player::draw() {
                           height},  // First frame of walking animation
                          {spriteFrame * 2, 0, spriteFrame,
                           height}};  // Second frame of walking animation
-  Vector2 playerCenter = {width / 2, height / 2};
 
   if (direction == left)
     for (int i = 0; i < 3; i++) frames[i].width *= -1;
 
   // Change of frame
-  if (animation != idle) {
+  if (animation == walking) {
     frameTimer += GetFrameTime();
     if (frameTimer >= frameRate) {
       frameTimer = .0;
       currentFrame++;
       if (currentFrame >= 3) currentFrame = 1;
     }
-  } else
+  } else if (animation == idle)
     currentFrame = 0;
 
   DrawTexturePro(sprite, frames[currentFrame], {x, y, spriteFrame, height},
-                 playerCenter, 0, WHITE);
+                 {0.f, 0.f}, 0, WHITE);
 }
